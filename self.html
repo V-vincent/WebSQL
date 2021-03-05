@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/common.css" />
+  <link rel="stylesheet" type="text/css" href="css/index.css" />
+  <link rel="stylesheet" type="text/css" href="css/self.css" />
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.bundle.js"></script>
+  <script src="js/vue.js"></script>
+  <script src="js/variable.js"></script>
+  <script src="js/dbInit.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/rem.js"></script>
+  <script src="js/dao.js"></script>
+  <title>小米商城--个人信息</title>
+</head>
+
+<body>
+  <div id="self">
+    <!-- 导航栏 -->
+    <div class="header">
+      <div class="container">
+        <div class="row">
+          <!-- 左边列表 -->
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col col-md-1"><a href="./index.html">小米商城</a></div>
+              <div class="col col-md-1"><a href="JavaScript:;;">MIUI</a></div>
+              <div class="col col-md-1"><a href="JavaScript:;;">loT</a></div>
+              <div class="col col-md-1"><a href="JavaScript:;;">云服务</a></div>
+              <div class="col col-md-1"><a href="JavaScript:;;">金融</a></div>
+              <div class="col col-md-1"><a href="JavaScript:;;">有品</a></div>
+              <div class="col col-md-1"><a href="JavaScript:;;">开放平台</a></div>
+              <div class="col col-md-1"><a href="JavaScript:;;">政企服务</a></div>
+              <div class="col col-md-1"><a href="JavaScript:;;">资质证照</a></div>
+              <div class="col col-md-1"><a href="JavaScript:;;">协议规则</a></div>
+              <div class="col col-md-1"><a href="JavaScript:;;">下载app</a></div>
+              <div class="col col-md-1"><a href="JavaScript:;;">地区</a></div>
+            </div>
+          </div>
+          <div class="col-md-4 header-right">
+            <div class="row">
+              <div class="col-md-2" v-if='loginUser'><a href="./self.html">{{ loginUser.name }}</a></div>
+              <div class="col-md-2" v-if='loginUser'><a href="JavaScript:;;" @click="signOut()">退出</a></div>
+              <div class="col-md-2" v-if='!loginUser'><a href="./login.html">登录</a></div>
+              <div class="col-md-2" v-if='!loginUser'><a href="./login.html">注册</a></div>
+              <div class="col-md-3"><a href="./order.html">我的订单</a></div>
+              <div class="col-md-3"><a href="JavaScript:;;">消息通知</a></div>
+              <div class="col-md-2"><a href="./cart.html">购物车</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 搜索栏 -->
+    <div class="container search">
+      <div class="row">
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col col-md-1"><a href="./index.html">
+                <div class="logo"></div>
+              </a></div>
+            <div class="col col-md-1"><a href="JavaScript:;;">小米手机</a></div>
+            <div class="col col-md-1"><a href="JavaScript:;;">红米</a></div>
+            <div class="col col-md-1"><a href="JavaScript:;;">电视</a></div>
+            <div class="col col-md-1"><a href="JavaScript:;;">笔记本</a></div>
+            <div class="col col-md-1"><a href="JavaScript:;;">家电</a></div>
+            <div class="col col-md-1"><a href="JavaScript:;;">新品</a></div>
+            <div class="col col-md-1"><a href="JavaScript:;;">路由器</a></div>
+            <div class="col col-md-1"><a href="JavaScript:;;">智能硬件</a></div>
+            <div class="col col-md-1"><a href="JavaScript:;;">服务</a></div>
+            <div class="col col-md-1"><a href="JavaScript:;;">社区</a></div>
+            <div class="col col-md-1"></div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col col-md-9">
+              <input type="text" placeholder="  小米8  小米MIX 2S">
+            </div>
+            <div class="col col-md-3">
+              <input type="submit" class="sousuo" value="搜索" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="personalModal container">
+      <div class="row personalBox">
+        <div class="col col-md-2 leftBoX">
+          <div class="top">
+            <h1 class="title">订单中心</h1>
+            <ul>
+              <li @click="toOrder()">我的订单</li>
+              <li>意外保</li>
+              <li>团购订单</li>
+              <li>评价晒单</li>
+            </ul>
+          </div>
+          <div class="bottom">
+            <h1 class="title">我的个人中心</h1>
+            <ul>
+              <li class="selected">个人中心</li>
+              <li>信息通知</li>
+              <li>优惠卷</li>
+              <li>收获地址</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col col-md-9 rightBox">
+          <h1 class="titleLeft">个人资料</h1>
+          <ul>
+            <li class="personalItem">
+              <div class="row liItem">
+                <div class="col col-md-3 Left detailName">昵称</div>
+                <div class="col col-md-5 Left detailInformation">王源</div>
+                <div class="col col-md-2 Left Edit">
+                  <a href="">编辑</a>
+                </div>
+              </div>
+            </li>
+            <li class="personalItem">
+              <div class="row liItem">
+                <div class="col col-md-3 Left detailName">
+                  手机号
+                </div>
+                <div class="col col-md-5 Left detailInformation">
+                  1515615303525
+                </div>
+                <div class="col col-md-2 Left Edit">
+                  <a href="">编辑</a>
+                </div>
+              </div>
+            </li>
+            <li class="personalItem">
+              <div class="row liItem">
+                <div class="col col-md-3 Left detailName">
+                  密码
+                </div>
+                <div class="col col-md-5 Left detailInformation">
+                  *************
+                </div>
+                <div class="col col-md-2 Left Edit">
+                  <a href="">编辑</a>
+                </div>
+              </div>
+            </li>
+            <li class="personalItem">
+              <div class="row liItem">
+                <div class="col col-md-3 Left detailName">
+                  个性签名
+                </div>
+                <div class="col col-md-5 Left detailInformation">
+                  单位奥所范围分为
+                </div>
+                <div class="col col-md-2 Left Edit">
+                  <a href="">编辑</a>
+                </div>
+              </div>
+            </li>
+            <li class="personalItem">
+              <div class="row liItem">
+                <div class="col col-md-3 Left detailName">
+                  我的爱好
+                </div>
+                <div class="col col-md-5 Left detailInformation">
+                  梵蒂冈梵蒂冈
+                </div>
+                <div class="col col-md-2 Left Edit">
+                  <a href="">编辑</a>
+                </div>
+              </div>
+            </li>
+            <li class="personalItem">
+              <div class="row liItem">
+                <div class="col col-md-3 Left detailName">
+                  收获地址
+                </div>
+                <div class="col col-md-5 Left detailInformation">
+                  广泛而感人
+                </div>
+                <div class="col col-md-2 Left Edit">
+                  <a href="">编辑</a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div>小米商城|MIUI|米聊|多看书城|小米路由器|视频电话|小米天猫店|小米淘宝直营店|小米网盟|小米移动|隐私政策|Select Region</div>
+    <div>©mi.com 京ICP证110507号 京ICP备10046444号 京公网安备11010802020134号 京网文[2014]0059-0009号</div>
+    <div>违法和不良信息举报电话：185-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</div>
+  </footer>
+</body>
+
+</html>
+<script>
+  const self = new Vue({
+    el: '#self',
+    data: {
+      loginUser: ''
+    },
+    created: function () {
+      initDataBase();
+      var me = this;
+      UserDao.loadLoginUserInfo(function (success, loginInfo) {
+        me.loginUser = loginInfo;
+      })
+    },
+    methods: {
+      signOut: function () {
+        var signOutInfo = {
+          id: '888888888',
+          status: 0,
+        }
+        UserDao.replaceLoginUser(signOutInfo, function (success) {
+          location.href = './login.html';
+        })
+      },
+      toOrder: function () {
+        location.href = './order.html';
+      }
+    }
+  });
+</script>

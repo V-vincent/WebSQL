@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/cart.css" />
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.bundle.js"></script>
+  <script src="js/vue.js"></script>
+  <script src="js/variable.js"></script>
+  <script src="js/dbInit.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/dao.js"></script>
+  <title>购物车</title>
+</head>
+
+<body>
+  <div class="cart-top">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1 "><a href="./index.html">
+            <div class="logo"></div>
+          </a></div>
+        <div class="col-md-2">
+          <h2>我的购物车</h2>
+          <p></p>
+        </div>
+        <div class="col-md-4">
+          <p>温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算</p>
+        </div>
+        <div class="col"></div>
+      </div>
+    </div>
+  </div>
+  <div class="page-main" id="cart">
+    <div class="container">
+      <div class='page-content'>
+        <div class="row head">
+          <div class="col check"><input type="checkbox" class="check-box">全选</div>
+          <div class="col"></div>
+          <div class="col col-md-3 name">商品名称</div>
+          <div class="col">单价</div>
+          <div class="col">数量</div>
+          <div class="col">小计</div>
+          <div class="col">操作</div>
+        </div>
+        <div v-for='(commodity,index) in carts'>
+          <div class="row list-item">
+            <div class="col check"><input type="checkbox" class="check-box" @click='checkClick(index, this)'></div>
+            <div class="col">
+              <div class="item-img"><img :src="commodity.img" alt=""></div>
+            </div>
+            <div class="col col-md-3 name">{{commodity.name}}</div>
+            <div class="col"><span>{{commodity.price}}</span>元</div>
+            <div class="col">
+              <div class='change-num row'>
+                <div class="col option" @click='commodity.num = commodity.num -1'>-</div>
+                <div class="col col-6">{{commodity.num}}</div>
+                <div class="col option" @click='commodity.num +=1'>+</div>
+              </div>
+            </div>
+            <div class="col"><span>{{commodity.price*commodity.num}}</span>元</div>
+            <div class="col delete" @click="deleteCommodity(index)">X</div>
+          </div>
+          <!-- <div class="row list-item">
+                    <div class="col check"><input type="checkbox" class="check-box"></div>
+                    <div class="col"><div class="item-img"><img src="./image/nav-80-211.jpg" alt=""></div></div>
+                    <div class="col col-md-3 name"> 小米USB充电器（4口） 白色 </div>
+                    <div class="col"><span>59</span>元</div>
+                    <div class="col">
+                        <div class='change-num row'>
+                            <div class="col option">-</div>
+                            <div class="col col-6">1</div>
+                            <div class="col option">+</div>
+                        </div>
+                    </div>
+                    <div class="col"><span>59</span>元</div>
+                    <div class="col">X</div>
+                </div> -->
+        </div>
+      </div>
+      <div class="page-content">
+        <div class="summary row">
+          <div class="col col-md-4 summary-left">
+            <a href="./index.html">继续购物</a>
+            |&nbsp;&nbsp;&nbsp;共<span>{{ totalNums }}</span>件商品，已选择<span>0</span>件
+          </div>
+          <div class="col"></div>
+          <div class="col total">合计：<span>{{ totalCarts }}</span>元</div>
+          <div class="col to-settlement">去结算</div>
+        </div>
+      </div>
+      <h2 class='also-buy'><span>买购物车中商品的人还买了</span></h2>
+    </div>
+  </div>
+  <footer class="cart-footer">
+    <div>小米商城|MIUI|米聊|多看书城|小米路由器|视频电话|小米天猫店|小米淘宝直营店|小米网盟|小米移动|隐私政策|Select Region</div>
+    <div>©mi.com 京ICP证110507号 京ICP备10046444号 京公网安备11010802020134号 京网文[2014]0059-0009号</div>
+    <div>违法和不良信息举报电话：185-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</div>
+  </footer>
+</body>
+
+</html>
+<script>
+  const cart = new Vue({
+    el: '#cart',
+    data: {
+      carts: carts,
+      loginUser: '',
+      isDefault: true,
+    },
+    created: function () {
+      initDataBase();
+      var me = this;
+      UserDao.loadLoginUserInfo(function (success, loginInfo) {
+        me.loginUser = loginInfo;
+        var userId = '6666';
+        if (loginInfo) userId = loginInfo.userId;
+        CartDao.loadCartsInfo(userId, function (success, carts) {
+          if (carts) {
+            me.isDefault = false;
+            me.carts = carts;
+          }
+        });
+      });
+    },
+    computed: {
+      totalCarts() {
+        return this.carts.reduce((sum, commodity) => {
+          return sum + commodity.num * commodity.price;
+        }, 0)
+      },
+      totalNums() {
+        return this.carts.reduce((sum, commodity) => {
+          return sum + commodity.num;
+        }, 0)
+      }
+    },
+    methods: {
+      deleteCommodity: function (index) {
+        var me = this;
+        if (me.isDefault) {
+          me.carts.splice(index, 1);
+        } else {
+          var detelCom = me.carts[index];
+          detelCom.status = 9;
+          CartDao.replaceCarts(detelCom, function (success) {
+            me.carts.splice(index, 1);
+          })
+        }
+      },
+      checkClick: function (index, view) {
+        console.log(index, view)
+      }
+    },
+  })
+</script>

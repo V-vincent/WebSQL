@@ -1,0 +1,116 @@
+/* 导航条 */
+.column {
+  width: 100%;
+  height: 60px;
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.07);
+  position: relative;
+  line-height: 60px;
+  overflow: hidden;
+}
+
+.column .column-name {
+  text-align: left;
+}
+
+.column .other {
+  text-align: right;
+}
+
+.page-mian {
+  padding-bottom: 50px;
+}
+
+/* 图片 */
+.detail-main {
+  padding-top: 50px;
+}
+
+.detail-img {
+  padding-top: 200px;
+}
+
+.detail-main img {
+  width: 90%;
+}
+
+.detail-main h4 {
+  margin-top: 20px;
+}
+
+/* 右边文案 */
+.right-style,
+.gift div {
+  text-align: left;
+}
+
+.right-style p {
+  font-size: 14px;
+}
+
+.right-style .orange-color {
+  color: rgb(255, 74, 0);
+}
+
+#column-price {
+  font-size: 20px;
+}
+
+.gift {
+  padding: 10px 0;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.gift>div {
+  margin-bottom: 5px;
+}
+
+.gift .btn {
+  width: 80px;
+  padding: 2px 0;
+  text-align: center;
+  background: #ff6700;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.edition {
+  margin-left: 6px;
+  margin-top: 15px;
+  line-height: 42px;
+  height: 42px;
+  position: relative;
+  border: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+
+.edition-sel,
+.edition:hover {
+  color: #ff6700;
+  border: 1px solid #ff6700;
+}
+
+.right-style .amout {
+  background: #f9f9fa;
+  padding: 20px;
+  margin: 30px 0;
+  text-align: left;
+}
+
+.btn-add {
+  background: #ff6700;
+  border-color: #ff6700;
+  color: #fff !important;
+  width: 298px;
+  height: 52px;
+  line-height: 52px;
+  font-size: 16px;
+}
+
+.btn-add:hover {
+  background-color: #f25807;
+  border-color: #f25807;
+}
